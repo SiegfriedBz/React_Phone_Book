@@ -77,7 +77,7 @@ const App = () => {
       />
       <hr/>
       <h2>Phonebook</h2>
-      <ul>
+      <div>
         {personsToShow && personsToShow.map(person => {
           return (
             <Person 
@@ -87,7 +87,7 @@ const App = () => {
               />
           )
         })}
-      </ul>
+      </div>
     </div>
   )
 }
