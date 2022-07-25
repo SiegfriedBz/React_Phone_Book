@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import NavBar from "./components/NavBar"
 import FormAddPerson from "./components/FormAddPerson"
 import Person from "./components/Person"
@@ -6,20 +6,29 @@ import { v4 as uuidv4 } from 'uuid';
 
 const App = () => {
 
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '+41-123456', id: 0 },
-    { name: 'Ada Lovelace', number: '+41-44-5323523', id: 1 },
-    { name: 'Dan Abramov', number: '+41-43-234345', id: 2 },
-    { name: 'Mary Poppendieck', number: '+41-23-6423122', id: 3 }
-  ]) 
-
+  const [persons, setPersons] = useState([]) 
   const [newPerson, setNewPerson] = useState({
     name: '', number: ''
   })
-
   const [searchterm, setSearchTerm] = useState("")
   const [filteredPersons, setFilteredPersons] = useState([])
   const [showAll, setShowAll] = useState(true)
+
+  useEffect(() => {
+    const init = async() => {
+      try {
+        const response = await fetch("http://localhost:3001/persons")
+        if(response.status === 200) {
+          const data = await response.json()
+          setPersons(data)
+        } else {
+          throw Error(response.status)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    };init()
+  }, [])
 
   const onAddPerson = (e) => {
     e.preventDefault()
