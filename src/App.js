@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import NavBar from "./components/NavBar"
 import FormAddPerson from "./components/FormAddPerson"
-import FormFilter from "./components/FormFilter"
 import Person from "./components/Person"
 import { v4 as uuidv4 } from 'uuid';  
 
@@ -60,15 +60,14 @@ const App = () => {
   const personsToShow = showAll ? persons : filteredPersons
 
   return (
+    <>
+    <NavBar 
+      handleFilter={onFilter}
+      setSearchTerm={setSearchTerm}
+      searchterm={searchterm}
+      showAll={showAll}
+    />
     <div className="container">
-      <h2>Filter</h2>
-      <FormFilter 
-        handleFilter={onFilter}
-        setSearchTerm={setSearchTerm}
-        searchterm={searchterm}
-        showAll={showAll}
-      />
-      <hr/>
       <h2>Add</h2>
       <FormAddPerson
         handleAdd={onAddPerson}
@@ -89,6 +88,7 @@ const App = () => {
         })}
       </div>
     </div>
+    </>
   )
 }
 
