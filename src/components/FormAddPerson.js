@@ -1,7 +1,7 @@
 const FormAddPerson = (props) => {
-    const { handleSubmit, setNewPerson, newPerson } = props
+    const { handleAdd, setNewPerson, newPerson } = props
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleAdd}>
             <label 
                 className="form-label"
                 htmlFor="name"
@@ -28,7 +28,7 @@ const FormAddPerson = (props) => {
                 setNewPerson({...newPerson, [e.target.id]: e.target.value})
                 }
             />
-            <button type="submit" className="btn btn-primary btn-sm my-2">add</button>         
+            <button type="submit" className="btn btn-primary btn-sm my-2">Add</button>         
         </form>
     )
   

@@ -21,7 +21,7 @@ const App = () => {
   const [filteredPersons, setFilteredPersons] = useState([])
   const [showAll, setShowAll] = useState(true)
 
-  const handleAddSubmit = (e) => {
+  const onAddPerson = (e) => {
     e.preventDefault()
     if(persons.find(p => p.name === newPerson.name)) {
       alert(`${newPerson.name} already exist in phone book`)
@@ -36,7 +36,12 @@ const App = () => {
     }
   }
 
-  const handleFilterSubmit = (e) => {
+  const onDeletePerson = (_id) => {
+    let newPersons = persons.filter(person => person.id !== _id)
+    setPersons(newPersons)
+  }
+
+  const onFilter = (e) => {
       e.preventDefault() 
       let filteredPersons = persons.filter(p => {
           return p.name.toLowerCase().includes(searchterm.toLowerCase())
@@ -58,7 +63,7 @@ const App = () => {
     <div className="container">
       <h2>Filter</h2>
       <FormFilter 
-        handleFilterSubmit={handleFilterSubmit}
+        handleFilter={onFilter}
         setSearchTerm={setSearchTerm}
         searchterm={searchterm}
         showAll={showAll}
@@ -66,16 +71,20 @@ const App = () => {
       <hr/>
       <h2>Add</h2>
       <FormAddPerson
-        handleSubmit={handleAddSubmit}
+        handleAdd={onAddPerson}
         setNewPerson={setNewPerson}
         newPerson={newPerson} 
       />
       <hr/>
       <h2>Phonebook</h2>
       <ul>
-        {personsToShow && personsToShow.map(p => {
+        {personsToShow && personsToShow.map(person => {
           return (
-            <Person key={p.id} person={p} />
+            <Person 
+              key={person.id} 
+              person={person} 
+              handleDelete={onDeletePerson}
+              />
           )
         })}
       </ul>

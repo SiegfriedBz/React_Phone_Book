@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 const FormFilter = (props) => {
 
-    const { handleFilterSubmit, setSearchTerm, searchterm, showAll } = props
+    const { handleFilter, setSearchTerm, searchterm, showAll } = props
    
     const buttonText = clsx({
         "Filter": showAll, 
@@ -12,7 +12,7 @@ const FormFilter = (props) => {
     console.log(buttonText)
 
     return (
-        <form onSubmit={handleFilterSubmit}>
+        <form onSubmit={handleFilter}>
             <label
                 htmlFor="filter"
                 className="form-label"
