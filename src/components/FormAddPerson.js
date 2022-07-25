@@ -1,4 +1,4 @@
-const Form = (props) => {
+const FormAddPerson = (props) => {
     const { handleSubmit, setNewPerson, newPerson } = props
     return (
         <form onSubmit={handleSubmit}>
@@ -28,10 +28,10 @@ const Form = (props) => {
                 setNewPerson({...newPerson, [e.target.id]: e.target.value})
                 }
             />
-            <button type="submit" className="btn btn-primary my-2">add</button>         
+            <button type="submit" className="btn btn-primary btn-sm my-2">add</button>         
         </form>
     )
   
 }
 
-export default Form
+export default FormAddPerson
