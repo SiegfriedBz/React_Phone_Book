@@ -1,31 +1,34 @@
-
 const Form = (props) => {
     const { handleSubmit, setNewPerson, newPerson } = props
     return (
         <form onSubmit={handleSubmit}>
-            <div>
-            name: 
+            <label 
+                className="form-label"
+                htmlFor="name"
+                >Name: 
+            </label>
             <input 
                 id="name"
+                className="form-control"
                 value={newPerson.name}
                 onChange={(e) => 
                 setNewPerson({...newPerson, [e.target.id]: e.target.value})
                 }
-                />
-            </div>
-            <div>
-            number: 
+            />
+            <label 
+                className="form-label"
+                htmlFor="number"
+                >Number: 
+            </label>
             <input 
                 id="number"
+                className="form-control"
                 value={newPerson.number}
                 onChange={(e) => 
                 setNewPerson({...newPerson, [e.target.id]: e.target.value})
                 }
-                />
-            </div>
-            <div>
-            <button type="submit" className="btn btn-primary">add</button>
-            </div>
+            />
+            <button type="submit" className="btn btn-primary my-2">add</button>         
         </form>
     )
   
