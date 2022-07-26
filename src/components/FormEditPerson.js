@@ -20,7 +20,6 @@ const FormEditPerson = (props) => {
                 id="name"
                 className="form-control"
                 placeholder={person.name}
-                value={editedPerson.name}
                 onChange={handleChange}
             />
             <label 
@@ -32,7 +31,6 @@ const FormEditPerson = (props) => {
                 id="number"
                 className="form-control"
                 placeholder={person.number}
-                value={editedPerson.number}
                 onChange={handleChange}
             />
             <button type="submit" className="btn btn-primary btn-sm my-2">Update</button>         

@@ -47,7 +47,6 @@ const App = () => {
   }
 
   const onUpdate = async(e, personId) => {
-    e.preventDefault()
     let currentPerson = persons.find(p => p.id === personId)
     let changedPerson = {...currentPerson, ...editedPerson}
     const upDated = await personService.editPerson(personId, changedPerson)

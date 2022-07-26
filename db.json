@@ -1,7 +1,7 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas AAA",
+      "name": "Arto Hellas",
       "number": "040-123456",
       "id": 1
     },
@@ -19,11 +19,6 @@
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
-    },
-    {
-      "name": "Mac India",
-      "number": "+41 23 456 67 78",
-      "id": 5
     },
     {
       "name": "Mac Pop Mac Pop",

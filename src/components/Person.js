@@ -15,15 +15,6 @@ const Person = (props) => {
 
     const buttonEditText = showFormEdit ? "Close Form" : "Edit"
 
-    const renderFormEdit = showFormEdit ? 
-        <FormEditPerson 
-            person={person} 
-            editedPerson={editedPerson}
-            setEditedPerson={setEditedPerson}
-            handleUpdate={handleUpdate}
-        />
-        : null
-
     return (
         <div className="card w-100 my-2">
             <div className="card-body">
@@ -35,7 +26,14 @@ const Person = (props) => {
                         className="btn btn-primary btn-sm"
                     >{buttonEditText}
                     </button>
-                    {renderFormEdit}
+                    {showFormEdit &&
+                        <FormEditPerson 
+                            person={person} 
+                            editedPerson={editedPerson}
+                            setEditedPerson={setEditedPerson}
+                            handleUpdate={handleUpdate}
+                        />
+                    }
                 </div>
                 <div className="my-2">
                     <button 
