@@ -3,12 +3,8 @@ const BASE_URL = "http://localhost:3001/persons"
 const getAll = async() => {
     try {
         const response = await fetch(BASE_URL)
-        if(response.status === 200) {
-            const data = await response.json()
-            return data
-        } else {
-            throw Error(response.status)
-        }
+        const data = await response.json()
+        return data
     } catch (error) {
         alert(error)
     }
@@ -23,12 +19,8 @@ const createPerson = async(person) => {
             },
             body: JSON.stringify(person)
         })
-        if(response.status === 201) {
-            const data = await response.json()
-            return data
-        } else {
-            throw Error(response.status)
-        }
+        const data = await response.json()
+        return data
     } catch (error) {
         alert(error)
     }
@@ -43,14 +35,16 @@ const editPerson = async(personId, changedPerson) => {
             },
             body: JSON.stringify(changedPerson)
         })
-        if(response.status === 200) {
+
+        if(response.ok) {
             const data = await response.json()
             return data
         } else {
-            throw Error(response.status)
+            return Promise.reject(response.status);
         }
     } catch (error) {
-        alert(error)
+        console.log(error)
+        return error
     }
 }
 
@@ -62,12 +56,8 @@ const deletePerson = async(personId) => {
                 "Content-Type": "application/json"
             }
         })
-        if(response.status === 200) {
-            const data = await response.json()
-            return data
-        } else {
-            throw Error(response.status)
-        }
+        const data = await response.json()
+        return data
     } catch (error) {
         alert(error)
     }
