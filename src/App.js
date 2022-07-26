@@ -2,52 +2,48 @@ import { useState, useEffect } from 'react'
 import NavBar from "./components/NavBar"
 import FormAddPerson from "./components/FormAddPerson"
 import Person from "./components/Person"
-import { v4 as uuidv4 } from 'uuid';  
+import personService from "./services/persons"
 
 const App = () => {
 
   const [persons, setPersons] = useState([]) 
-  const [newPerson, setNewPerson] = useState({
-    name: '', number: ''
-  })
+  const [newPerson, setNewPerson] = useState({name: '', number: ''})
+  const [editedPerson, setEditedPerson] = useState({name: '', number: ''})
   const [searchterm, setSearchTerm] = useState("")
   const [filteredPersons, setFilteredPersons] = useState([])
-  const [showAll, setShowAll] = useState(true)
+  const [showAllPersons, setShowAllPersons] = useState(true)
 
   useEffect(() => {
     const init = async() => {
-      try {
-        const response = await fetch("http://localhost:3001/persons")
-        if(response.status === 200) {
-          const data = await response.json()
-          setPersons(data)
-        } else {
-          throw Error(response.status)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    };init()
+      const persons = await personService.getAll()
+      setPersons(persons)
+    }; init()
   }, [])
 
-  const onAddPerson = (e) => {
+  const onAdd = async(e) => {
     e.preventDefault()
     if(persons.find(p => p.name === newPerson.name)) {
       alert(`${newPerson.name} already exist in phone book`)
-      setNewPerson({
-        name: '', number: ''
-      })
     } else {
-      setPersons([...persons, {...newPerson, id: uuidv4()}])
-      setNewPerson({
-        name: '', number: ''
-      })
+      const person = await personService.createPerson(newPerson)
+      setPersons([...persons, person])
     }
+    setNewPerson({name: '', number: ''})
   }
 
-  const onDeletePerson = (_id) => {
-    let newPersons = persons.filter(person => person.id !== _id)
-    setPersons(newPersons)
+  const onUpdate = async(e, personId) => {
+    e.preventDefault()
+    let currentPerson = persons.find(p => p.id === personId)
+    let changedPerson = {...currentPerson, ...editedPerson}
+    const upDated = await personService.editPerson(personId, changedPerson)
+    setPersons(persons.map(p => p.id !== personId ? p : upDated))
+    setNewPerson({name: '', number: ''})
+  }
+
+  const onDelete = async (_id) => {
+      await personService.deletePerson(_id)
+      const persons = await personService.getAll()
+      setPersons(persons)
   }
 
   const onFilter = (e) => {
@@ -58,7 +54,7 @@ const App = () => {
       if(filteredPersons.length > 0) {
           alert(`${searchterm} returned ${filteredPersons.length} results`)
           setFilteredPersons(filteredPersons)
-          setShowAll(!showAll)
+          setShowAllPersons(!showAllPersons)
       } else {
           alert(`${searchterm} was not found`)
           setFilteredPersons([])
@@ -66,7 +62,8 @@ const App = () => {
       setSearchTerm("")
   }
 
-  const personsToShow = showAll ? persons : filteredPersons
+  const personsToShow = showAllPersons ? persons : filteredPersons
+  console.log(personsToShow)
 
   return (
     <>
@@ -74,12 +71,12 @@ const App = () => {
       handleFilter={onFilter}
       setSearchTerm={setSearchTerm}
       searchterm={searchterm}
-      showAll={showAll}
+      showAllPersons={showAllPersons}
     />
     <div className="container">
       <h2>Add</h2>
       <FormAddPerson
-        handleAdd={onAddPerson}
+        handleAdd={onAdd}
         setNewPerson={setNewPerson}
         newPerson={newPerson} 
       />
@@ -91,7 +88,10 @@ const App = () => {
             <Person 
               key={person.id} 
               person={person} 
-              handleDelete={onDeletePerson}
+              editedPerson={editedPerson}
+              setEditedPerson={setEditedPerson}
+              handleUpdate={onUpdate}
+              handleDelete={onDelete}
               />
           )
         })}

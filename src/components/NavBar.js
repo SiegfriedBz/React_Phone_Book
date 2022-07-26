@@ -1,13 +1,8 @@
-import clsx from 'clsx';
-
 const NavBar = (props) => {
 
-    const { handleFilter, setSearchTerm, searchterm, showAll } = props
+    const { handleFilter, setSearchTerm, searchterm, showAllPersons } = props
    
-    const buttonText = clsx({
-        "Filter": showAll, 
-        "Show All": !showAll
-    })
+    const buttonText = showAllPersons ? "Filter" : "Show All"
     
     return (
         <nav className="navbar" style={{backgroundColor: "#e3f2fd"}}>
