@@ -10,7 +10,7 @@ const NavBar = (props) => {
     })
     
     return (
-        <nav className="navbar bg-light">
+        <nav className="navbar" style={{backgroundColor: "#e3f2fd"}}>
             <div className="container-fluid">
                 <a className="navbar-brand">PhoneBook</a>
                 <form 
