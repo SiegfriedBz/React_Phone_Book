@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3001/persons"
+const BASE_URL = "http://localhost:3001/api/persons"
 
 const getAll = async() => {
     try {
